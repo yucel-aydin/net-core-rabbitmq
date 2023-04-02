@@ -1,0 +1,17 @@
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\bin\Debug\net7.0\RabbitMQ.Subscriber.exe
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\bin\Debug\net7.0\RabbitMQ.Subscriber.deps.json
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\bin\Debug\net7.0\RabbitMQ.Subscriber.runtimeconfig.json
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\bin\Debug\net7.0\RabbitMQ.Subscriber.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\bin\Debug\net7.0\RabbitMQ.Subscriber.pdb
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\bin\Debug\net7.0\RabbitMQ.Client.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.csproj.AssemblyReference.cache
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.AssemblyInfoInputs.cache
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.AssemblyInfo.cs
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.csproj.CoreCompileInputs.cache
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.csproj.CopyComplete
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\refint\RabbitMQ.Subscriber.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.pdb
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.genruntimeconfig.cache
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\ref\RabbitMQ.Subscriber.dll

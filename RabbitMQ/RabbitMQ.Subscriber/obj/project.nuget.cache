@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "5sIYPwFu96P20OkBXabA/IlEnTMg1ZzNVfVePMacX35gIek6D+aeAFxA0O8X19O8323XQitko9dkXatjIDO3Og==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\4alabs-yucel\\source\\repos\\net-core-rabbitmq\\RabbitMQ\\RabbitMQ.Subscriber\\RabbitMQ.Subscriber.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\4alabs-yucel\\.nuget\\packages\\rabbitmq.client\\6.5.0\\rabbitmq.client.6.5.0.nupkg.sha512",
+    "C:\\Users\\4alabs-yucel\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\4alabs-yucel\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,17 @@
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\bin\Debug\net7.0\RabbitMQ.Publisher.exe
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\bin\Debug\net7.0\RabbitMQ.Publisher.deps.json
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\bin\Debug\net7.0\RabbitMQ.Publisher.runtimeconfig.json
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\bin\Debug\net7.0\RabbitMQ.Publisher.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\bin\Debug\net7.0\RabbitMQ.Publisher.pdb
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\bin\Debug\net7.0\RabbitMQ.Client.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.csproj.AssemblyReference.cache
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.AssemblyInfoInputs.cache
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.AssemblyInfo.cs
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.csproj.CoreCompileInputs.cache
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.csproj.CopyComplete
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\refint\RabbitMQ.Publisher.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.pdb
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\RabbitMQ.Publisher.genruntimeconfig.cache
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Publisher\obj\Debug\net7.0\ref\RabbitMQ.Publisher.dll
