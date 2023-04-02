@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using System.Linq;
 using System.Text;
 
 namespace RabbitMQ.Publisher
@@ -30,17 +31,25 @@ namespace RabbitMQ.Publisher
             /// *false subscriber kalmasada kuyruk kalır
             /// *true bağlı son subscriber bağlantısıda kesilince kuyruk silinir
             channel.QueueDeclare("hello-queue",true,false,false);
+
+            // kuyruğa 50 tane mesaj gönderiyoruz.
+            Enumerable.Range(1, 50).ToList().ForEach(x =>
+            {
+                //Kuyruğa gönderilen mesaj mesajlar byte dizisi olarak gönderilir. Bu yüzden dosya vs. de gönderilebilir.
+                string message = $"Message {x}";
+                // Byte olarak aldık.
+                var messageBody = Encoding.UTF8.GetBytes(message);
+
+                // exchange kullanmıyoruz
+                channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
+
+
+                Console.WriteLine(message + " mesajı kuyruğa gönderildi");
+
+            });
+
             
-            //Kuyruğa gönderilen mesaj mesajlar byte dizisi olarak gönderilir. Bu yüzden dosya vs. de gönderilebilir.
-            string message = "Hello word";
-            // Byte olarak aldık.
-            var messageBody = Encoding.UTF8.GetBytes(message);  
-
-            // exchange kullanmıyoruz
-            channel.BasicPublish(string.Empty,"hello-queue",null,messageBody);
-
-
-            Console.WriteLine(message+ " mesajı kuyruğa gönderildi");
+      
             Console.ReadLine();
 
 
