@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kCsw4c5RXuQYYWTYwyaE70qpfGYPiIt3x/7cazn+61bdKRxj3bmsuuwmfDj7ZNb2CZyZH5aNbnvK3ewWAM8wMg==",
+  "dgSpecHash": "ZaWw9Tn7KCqVVgx955OeEEqxdKjzPPp2AyM+QFWvV3LSsyhG4Kaedv3AbS2X2MfIxvlm5OVyD+gvFnUu53ypXQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\4alabs-yucel\\source\\repos\\net-core-rabbitmq\\RabbitMQ\\RabbitMQ.Publisher\\RabbitMQ.Publisher.csproj",
   "expectedPackageFiles": [

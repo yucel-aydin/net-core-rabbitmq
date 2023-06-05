@@ -13,18 +13,35 @@ namespace RabbitMQ.Subscriber
             // api.cloudamqp.com rabbitmq cloud verdiği url i factorye veriyoruz.
             factory.Uri = new Uri("amqps://uliyuxac:GTQlxYysEK14TQz-j8F-B7NQ6_V4XHp7@rattlesnake.rmq.cloudamqp.com/uliyuxac");
 
-        
+
             // bağlantıyı açıyoruz using connection kullanırsak Main scopeları bitince connection kapanır. best practise budur
             using var connection = factory.CreateConnection();
 
             //bağlantı üzerinden bir kanal oluşturuyoruz rabbitmq ya erişmek için.
             var channel = connection.CreateModel();
 
-            // publisher tarafında bu kuyruğu zaten oluşturduğumuz için bu satırda ilgili kuyruğa bağlanırız
-            // eğer publisherde oluşmazsa burda oluşur
-            //publisher tarafında oluştuğuna eminsek kullanmaya gerek olmaz.
-            // iki taraftada parametreler aynı olmalı
-            //            channel.QueueDeclare("hello-queue", true, false, false);
+            /**
+             *burada random bir kuyruk adı oluşturuyoruz. 
+             * Consumerdan birden fazla instanse ayağa kaldırırsak hepsi aynı kuyruğa bağlanmasınlar diye böyle yaptık
+             * Subscriber(sonsumerlar ) down olsada kuyruk silinmesin istersek kuyruk adını random değil sabit vermeliyiz.
+             */
+            var randomQueue = "log-database-save-queue"; //channel.QueueDeclare().QueueName;
+
+            /**
+             *1. Parametre durable : true olursa fiziksel olarak sabit diskte kaydedilir
+             *2. Parametre exclusive : false olursa başka kanallardan bu kuyruğa bağlanabilir
+             *3. Parametre autoDelete : false olursa subscriberlar down olsada kuyruk silinmez.
+             */
+            channel.QueueDeclare(randomQueue, true, false, false);
+            /**
+             * var olan producer da oluşturduğumuz exchangemize bind ediyoruz
+             * Burada kuyruk declare etmiyoruz çünkü subscriber kapansa dahi kuyruk kalır ama bind edersek subscriber exchange mesaj yolladığı sürece kuyruk var olur. 
+             * 1. parametre kuyruk adı
+             * 2. parametre exchange adı
+             * 3. paramter route boş
+             * 
+             */
+            channel.QueueBind(randomQueue, "logs-fanout", "", null);
 
 
             //bir kerede subscribera kaç mesaj gelceğini belirtiyoruz.
@@ -39,12 +56,12 @@ namespace RabbitMQ.Subscriber
             //subscriber(comsumer) oluşturuyoruz ve oluşturulan kanalı verdik
             var consumer = new EventingBasicConsumer(channel);
 
-            //kanal üzerinden "hello-queue" isimli kuyruğu dinliyoruz
+            //kanal üzerinden yukarda random oluşturduğumuz kuyruğu dinliyoruz
             //autoAck
             /// *true olursa kuyruktan mesaj alındıktan sonra rabbitmq ilgili mesajı siler
             /// *false olursa  rabbitmq ya mesajı silme, işleme göre mesaj silineceğini biz bildireceğiz demiş oluruz.
-            channel.BasicConsume("hello-queue", false, consumer);
-
+            channel.BasicConsume(randomQueue, false, consumer);
+            Console.WriteLine("Loglar dinleniyor...");
             //"hello-queue" kuyruğuna bir mesaj geldiğinde bu event çalışır
             consumer.Received += (object? sender, BasicDeliverEventArgs e) =>
             {

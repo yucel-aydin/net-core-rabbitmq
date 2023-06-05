@@ -22,27 +22,25 @@ namespace RabbitMQ.Publisher
                 using var connection = factory.CreateConnection();
                 //bağlantı üzerinden bir kanal oluşturuyoruz rabbitmq ya erişmek için.
                 var channel = connection.CreateModel();
-                // kuyruk oluşturuyoruz
-                // "hello-queue" kuyruk adı
-                //durable
-                ////*false olursa oluşan kuyruklar memoryde tutular rabbitmq restart olursa kuyruklar kaybolur
-                ////*true olursa fiziksel olarak kaydedilir ve kuyruklar kaybedilmez.
-                //exclusive
-                //// * false olursa farklı bir processten ulaşabilmek için.
-                //// * true olursa bu kuyhruğa sadece burdaki oluşturulan kanal üzerinden bağlanabiliriz
-                // autoDelete
-                /// *false subscriber kalmasada kuyruk kalır
-                /// *true bağlı son subscriber bağlantısıda kesilince kuyruk silinir
-                channel.QueueDeclare("hello-queue", true, false, false);
+
+
+                //Fanout Exchange oluşturuyoruz
+                /**
+                 * 1. Parametre "logs-fanout" exchange adı
+                 * 2. Parametre durable true ise uygulama restrat olsa da exchange kaybolmaz false olursa kaybolur 
+                 * 3. Parametre type:ExchangeType.Fanout exchange tipi fanout seçiyoruz
+                 * **/
+                channel.ExchangeDeclare("logs-fanout",durable:true, type:ExchangeType.Fanout);
+
                 // kuyruğa 50 tane mesaj gönderiyoruz.
                 Enumerable.Range(1, 50).ToList().ForEach(x =>
                 {
                     //Kuyruğa gönderilen mesaj mesajlar byte dizisi olarak gönderilir. Bu yüzden dosya vs. de gönderilebilir.
-                    string message = $"Message {x}";
+                    string message = $"log {x}";
                     // Byte olarak aldık.
                     var messageBody = Encoding.UTF8.GetBytes(message);
-                    // exchange kullanmıyoruz
-                    channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
+                    // exchange kullanıyoruz üstte oluşturduğumuz exchange adını veriyoruz
+                    channel.BasicPublish("logs-fanout", "", null, messageBody);
                     Console.WriteLine(message + " mesajı kuyruğa gönderildi");
                 });
                 Console.ReadLine();
