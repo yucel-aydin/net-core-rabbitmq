@@ -20,28 +20,7 @@ namespace RabbitMQ.Subscriber
             //bağlantı üzerinden bir kanal oluşturuyoruz rabbitmq ya erişmek için.
             var channel = connection.CreateModel();
 
-            /**
-             *burada random bir kuyruk adı oluşturuyoruz. 
-             * Consumerdan birden fazla instanse ayağa kaldırırsak hepsi aynı kuyruğa bağlanmasınlar diye böyle yaptık
-             * Subscriber(sonsumerlar ) down olsada kuyruk silinmesin istersek kuyruk adını random değil sabit vermeliyiz.
-             */
-            var randomQueue = "log-database-save-queue"; //channel.QueueDeclare().QueueName;
 
-            /**
-             *1. Parametre durable : true olursa fiziksel olarak sabit diskte kaydedilir
-             *2. Parametre exclusive : false olursa başka kanallardan bu kuyruğa bağlanabilir
-             *3. Parametre autoDelete : false olursa subscriberlar down olsada kuyruk silinmez.
-             */
-            channel.QueueDeclare(randomQueue, true, false, false);
-            /**
-             * var olan producer da oluşturduğumuz exchangemize bind ediyoruz
-             * Burada kuyruk declare etmiyoruz çünkü subscriber kapansa dahi kuyruk kalır ama bind edersek subscriber exchange mesaj yolladığı sürece kuyruk var olur. 
-             * 1. parametre kuyruk adı
-             * 2. parametre exchange adı
-             * 3. paramter route boş
-             * 
-             */
-            channel.QueueBind(randomQueue, "logs-fanout", "", null);
 
 
             //bir kerede subscribera kaç mesaj gelceğini belirtiyoruz.
@@ -56,24 +35,33 @@ namespace RabbitMQ.Subscriber
             //subscriber(comsumer) oluşturuyoruz ve oluşturulan kanalı verdik
             var consumer = new EventingBasicConsumer(channel);
 
+
+            //bağlanacağı kuyruğu belirtiyoruz
+            var queueName = "direct-queue-Critical";
+
+
             //kanal üzerinden yukarda random oluşturduğumuz kuyruğu dinliyoruz
             //autoAck
             /// *true olursa kuyruktan mesaj alındıktan sonra rabbitmq ilgili mesajı siler
             /// *false olursa  rabbitmq ya mesajı silme, işleme göre mesaj silineceğini biz bildireceğiz demiş oluruz.
-            channel.BasicConsume(randomQueue, false, consumer);
+
             Console.WriteLine("Loglar dinleniyor...");
             //"hello-queue" kuyruğuna bir mesaj geldiğinde bu event çalışır
             consumer.Received += (object? sender, BasicDeliverEventArgs e) =>
             {
                 // Publisherda byte dizisine çevirip yolladığımız mesajı burada tekrar string olarak alıyhoruz
                 var messages = Encoding.UTF8.GetString(e.Body.ToArray());
-                //Thread.Sleep(1500);
+                Thread.Sleep(1500);
                 Console.WriteLine(messages);
+
+                //Gelen mesajları txt ye yazıyoruz
+                File.AppendAllText("log-critical.txt", messages + "\n");
 
                 // mesajı aldık işledik,mesajın tagini Rabbitmq ya yolluyoruz ve kuyruktan bu mesaj siliniyor.
                 // mesajı işlerken hata oldu o zaman bu mesajı göndermeyiz.
                 channel.BasicAck(e.DeliveryTag, false);
             };
+            channel.BasicConsume(queueName, false, consumer);
 
             Console.ReadLine();
 
