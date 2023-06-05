@@ -22,7 +22,6 @@ namespace RabbitMQ.Publisher
             factory.Uri = new Uri("amqps://uliyuxac:GTQlxYysEK14TQz-j8F-B7NQ6_V4XHp7@rattlesnake.rmq.cloudamqp.com/uliyuxac");
 
 
-
             try
             {
                 // bağlantıyı açıyoruz using connection kullanırsak Main scopeları bitince connection kapanır. best practise budur
@@ -37,34 +36,27 @@ namespace RabbitMQ.Publisher
                  * 2. Parametre durable true ise uygulama restrat olsa da exchange kaybolmaz false olursa kaybolur 
                  * 3. Parametre type:ExchangeType.Direct exchange tipi Direct seçiyoruz
                  * **/
-                channel.ExchangeDeclare("logs-direct", durable: true, type: ExchangeType.Direct);
+                channel.ExchangeDeclare("logs-topic", durable: true, type: ExchangeType.Topic);
 
-                /**
-                 *Tanımlı enumların her biri için bir kuyruk oluşturuyoruz.
-                 */
-                Enum.GetNames(typeof(LogNames)).ToList().ForEach(x=>
-                {
-                    var routeKey = $"route-{x}";
-                    var queueName = $"direct-queue-{x}";
-                    channel.QueueDeclare(queueName, true, false, false);
-                    channel.QueueBind(queueName, "logs-direct", routeKey,null);
-                });
 
+                Random rnd = new Random();
                 // kuyruğa 50 tane mesaj gönderiyoruz.
                 Enumerable.Range(1, 50).ToList().ForEach(x =>
-                {
-                    //random log type alıyoruz
-                    LogNames log = (LogNames)new Random().Next(1, 5);
+                {           
+                    LogNames log1 = (LogNames)rnd.Next(1, 5);
+                    LogNames log2 = (LogNames)rnd.Next(1, 5);
+                    LogNames log3 = (LogNames)rnd.Next(1, 5);
+
+                    //Route keyi "." ile ayırıyoruz.
+                    var routeKey = $"{log1}.{log2}.{log3}";
                     //Kuyruğa gönderilen mesaj mesajlar byte dizisi olarak gönderilir. Bu yüzden dosya vs. de gönderilebilir.
-                    string message = $"log-type: {log}";
+                    string message = $"log-type: {log1}-{log2}-{log3}";
+
                     // Byte olarak aldık.
                     var messageBody = Encoding.UTF8.GetBytes(message);
-
-                    var routeKey = $"route-{log}";
-
                     // exchange kullanıyoruz üstte oluşturduğumuz exchange adını veriyoruz
                     // routekeyi veriyoruz
-                    channel.BasicPublish("logs-direct", routeKey, null, messageBody);
+                    channel.BasicPublish("logs-topic", routeKey, null, messageBody);
                     Console.WriteLine(message + " mesajı kuyruğa gönderildi");
                 });
                 Console.ReadLine();

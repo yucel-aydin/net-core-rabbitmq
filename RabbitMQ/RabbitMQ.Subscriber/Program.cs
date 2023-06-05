@@ -20,9 +20,6 @@ namespace RabbitMQ.Subscriber
             //bağlantı üzerinden bir kanal oluşturuyoruz rabbitmq ya erişmek için.
             var channel = connection.CreateModel();
 
-
-
-
             //bir kerede subscribera kaç mesaj gelceğini belirtiyoruz.
             //1. parametre, mesajın boyutudur. 0 olursa herhangi boyut olabilir
             //2. parametre,  her bir subscriber a 1 er 1 er mesaj gelsin
@@ -37,8 +34,17 @@ namespace RabbitMQ.Subscriber
 
 
             //bağlanacağı kuyruğu belirtiyoruz
-            var queueName = "direct-queue-Critical";
+            var queueName = channel.QueueDeclare().QueueName;//"direct-queue-Critical";
 
+
+            // ortasında Error geçen bir mesaj gelirse bunu alır.
+            //   var routekey = "*.Error.*";
+            // sonu warning olanları alır;
+            //var routekey = "*.*.Warning";
+            // başı Info olsun sonu ne olursa olsun
+            var routekey = "Info.#";
+            channel.QueueBind(queueName, "logs-topic", routekey);
+            channel.BasicConsume(queueName, false, consumer);
 
             //kanal üzerinden yukarda random oluşturduğumuz kuyruğu dinliyoruz
             //autoAck
@@ -55,7 +61,7 @@ namespace RabbitMQ.Subscriber
                 Console.WriteLine(messages);
 
                 //Gelen mesajları txt ye yazıyoruz
-                File.AppendAllText("log-critical.txt", messages + "\n");
+               // File.AppendAllText("log-critical.txt", messages + "\n");
 
                 // mesajı aldık işledik,mesajın tagini Rabbitmq ya yolluyoruz ve kuyruktan bu mesaj siliniyor.
                 // mesajı işlerken hata oldu o zaman bu mesajı göndermeyiz.
