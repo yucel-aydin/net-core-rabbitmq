@@ -15,3 +15,5 @@ C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscribe
 C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.pdb
 C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\RabbitMQ.Subscriber.genruntimeconfig.cache
 C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\obj\Debug\net7.0\ref\RabbitMQ.Subscriber.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\bin\Debug\net7.0\Shared.dll
+C:\Users\4alabs-yucel\source\repos\net-core-rabbitmq\RabbitMQ\RabbitMQ.Subscriber\bin\Debug\net7.0\Shared.pdb

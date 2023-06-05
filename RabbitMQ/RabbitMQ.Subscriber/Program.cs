@@ -1,6 +1,8 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Shared;
 using System.Text;
+using System.Text.Json;
 
 namespace RabbitMQ.Subscriber
 {
@@ -36,7 +38,7 @@ namespace RabbitMQ.Subscriber
             //bağlanacağı kuyruğu belirtiyoruz
             var queueName = channel.QueueDeclare().QueueName;//"direct-queue-Critical";
 
-            Dictionary<string,object> headers = new Dictionary<string, object>();
+            Dictionary<string, object> headers = new Dictionary<string, object>();
             headers.Add("format", "pdf");
             headers.Add("shape", "a4");
             //all :belirttiğimiz her bir key-value çifti aynı olmalı
@@ -57,8 +59,10 @@ namespace RabbitMQ.Subscriber
             {
                 // Publisherda byte dizisine çevirip yolladığımız mesajı burada tekrar string olarak alıyhoruz
                 var messages = Encoding.UTF8.GetString(e.Body.ToArray());
+                Product product = JsonSerializer.Deserialize<Product>(messages);
+
                 Thread.Sleep(1500);
-                Console.WriteLine(messages);
+                Console.WriteLine($"Gelen Mesaj: {product.Id}-{product.Name}-{product.Price}-{product.Stock}");
 
                 // mesajı aldık işledik,mesajın tagini Rabbitmq ya yolluyoruz ve kuyruktan bu mesaj siliniyor.
                 // mesajı işlerken hata oldu o zaman bu mesajı göndermeyiz.

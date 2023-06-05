@@ -1,7 +1,9 @@
 ﻿using RabbitMQ.Client;
+using Shared;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text;
+using System.Text.Json;
 
 namespace RabbitMQ.Publisher
 {
@@ -32,18 +34,26 @@ namespace RabbitMQ.Publisher
                 channel.ExchangeDeclare("header-exchange", durable: true, type: ExchangeType.Headers);
 
                 //key-value tipinde parametrelerimizi belirliyoruz
-                Dictionary<string,object> headerParams = new Dictionary<string, object>();
+                Dictionary<string, object> headerParams = new Dictionary<string, object>();
                 headerParams.Add("format", "pdf");
                 headerParams.Add("shape", "a4");
 
                 //kanalda properties oluşturup headerına yazdığımız parametreleri veriyoruz
-                var properties= channel.CreateBasicProperties();
-                properties.Headers=headerParams;
+                var properties = channel.CreateBasicProperties();
+                properties.Headers = headerParams;
                 properties.Persistent = true; // true set edilirse mesajlar da kalıcı hale gelir.
 
+                var product = new Product
+                {
+                    Id = 1,
+                    Name = "Test",
+                    Price = 1,
+                    Stock = 1,
+                };
+                var productJsonString=JsonSerializer.Serialize(product);
 
                 //Mesajımınızı publish ediyoruz.
-                channel.BasicPublish("header-exchange", string.Empty, properties,Encoding.UTF8.GetBytes("Header mesajım"));
+                channel.BasicPublish("header-exchange", string.Empty, properties, Encoding.UTF8.GetBytes(productJsonString));
 
                 Console.WriteLine("Mesaj Gönderildi");
 
