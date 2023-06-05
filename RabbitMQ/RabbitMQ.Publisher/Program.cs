@@ -5,13 +5,6 @@ using System.Text;
 
 namespace RabbitMQ.Publisher
 {
-    public enum LogNames
-    {
-        Critical = 1,
-        Error = 2,
-        Warning = 3,
-        Info = 4
-    }
     public class Program
     {
         static void Main(string[] args)
@@ -32,33 +25,26 @@ namespace RabbitMQ.Publisher
 
                 //Fanout Exchange oluşturuyoruz
                 /**
-                 * 1. Parametre "logs-direct" exchange adı
+                 * 1. Parametre "header-exchange" exchange adı
                  * 2. Parametre durable true ise uygulama restrat olsa da exchange kaybolmaz false olursa kaybolur 
-                 * 3. Parametre type:ExchangeType.Direct exchange tipi Direct seçiyoruz
+                 * 3. Parametre type:ExchangeType.Headers exchange tipi Headers seçiyoruz
                  * **/
-                channel.ExchangeDeclare("logs-topic", durable: true, type: ExchangeType.Topic);
+                channel.ExchangeDeclare("header-exchange", durable: true, type: ExchangeType.Headers);
 
+                //key-value tipinde parametrelerimizi belirliyoruz
+                Dictionary<string,object> headerParams = new Dictionary<string, object>();
+                headerParams.Add("format", "pdf");
+                headerParams.Add("shape", "a4");
 
-                Random rnd = new Random();
-                // kuyruğa 50 tane mesaj gönderiyoruz.
-                Enumerable.Range(1, 50).ToList().ForEach(x =>
-                {           
-                    LogNames log1 = (LogNames)rnd.Next(1, 5);
-                    LogNames log2 = (LogNames)rnd.Next(1, 5);
-                    LogNames log3 = (LogNames)rnd.Next(1, 5);
+                //kanalda properties oluşturup headerına yazdığımız parametreleri veriyoruz
+                var properties= channel.CreateBasicProperties();
+                properties.Headers=headerParams;
 
-                    //Route keyi "." ile ayırıyoruz.
-                    var routeKey = $"{log1}.{log2}.{log3}";
-                    //Kuyruğa gönderilen mesaj mesajlar byte dizisi olarak gönderilir. Bu yüzden dosya vs. de gönderilebilir.
-                    string message = $"log-type: {log1}-{log2}-{log3}";
+                //Mesajımınızı publish ediyoruz.
+                channel.BasicPublish("header-exchange", string.Empty, properties,Encoding.UTF8.GetBytes("Header mesajım"));
 
-                    // Byte olarak aldık.
-                    var messageBody = Encoding.UTF8.GetBytes(message);
-                    // exchange kullanıyoruz üstte oluşturduğumuz exchange adını veriyoruz
-                    // routekeyi veriyoruz
-                    channel.BasicPublish("logs-topic", routeKey, null, messageBody);
-                    Console.WriteLine(message + " mesajı kuyruğa gönderildi");
-                });
+                Console.WriteLine("Mesaj Gönderildi");
+
                 Console.ReadLine();
             }
             catch (RabbitMQ.Client.Exceptions.BrokerUnreachableException e)

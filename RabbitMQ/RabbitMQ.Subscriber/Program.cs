@@ -36,14 +36,14 @@ namespace RabbitMQ.Subscriber
             //bağlanacağı kuyruğu belirtiyoruz
             var queueName = channel.QueueDeclare().QueueName;//"direct-queue-Critical";
 
+            Dictionary<string,object> headers = new Dictionary<string, object>();
+            headers.Add("format", "pdf");
+            headers.Add("shape", "a4");
+            //all :belirttiğimiz her bir key-value çifti aynı olmalı
+            //any :belirttiğimiz herhangi bir key-value çifti aynı olmalı
+            headers.Add("x-match", "all");
 
-            // ortasında Error geçen bir mesaj gelirse bunu alır.
-            //   var routekey = "*.Error.*";
-            // sonu warning olanları alır;
-            //var routekey = "*.*.Warning";
-            // başı Info olsun sonu ne olursa olsun
-            var routekey = "Info.#";
-            channel.QueueBind(queueName, "logs-topic", routekey);
+            channel.QueueBind(queueName, "header-exchange", string.Empty, headers);
             channel.BasicConsume(queueName, false, consumer);
 
             //kanal üzerinden yukarda random oluşturduğumuz kuyruğu dinliyoruz
@@ -59,9 +59,6 @@ namespace RabbitMQ.Subscriber
                 var messages = Encoding.UTF8.GetString(e.Body.ToArray());
                 Thread.Sleep(1500);
                 Console.WriteLine(messages);
-
-                //Gelen mesajları txt ye yazıyoruz
-               // File.AppendAllText("log-critical.txt", messages + "\n");
 
                 // mesajı aldık işledik,mesajın tagini Rabbitmq ya yolluyoruz ve kuyruktan bu mesaj siliniyor.
                 // mesajı işlerken hata oldu o zaman bu mesajı göndermeyiz.
